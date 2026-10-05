@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TPass_Data\**" />
+    <Content Remove="TPass_Data\**" />
+    <EmbeddedResource Remove="TPass_Data\**" />
+    <None Remove="TPass_Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.31" />
@@ -25,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TPass_Data\TPass_Data.csproj" />
+    <ProjectReference Include="TPass_Data\TPass_Data.csproj" />
   </ItemGroup>
 
 </Project>
