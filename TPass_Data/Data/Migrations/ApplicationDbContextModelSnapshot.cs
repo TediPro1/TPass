@@ -196,6 +196,45 @@ namespace TPass_Data.Data.Migrations
                     b.ToTable("Credentials");
                 });
 
+            modelBuilder.Entity("TPass_Data.Entities.CredentialTag", b =>
+                {
+                    b.Property<int>("CredentialId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CredentialId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("CredentialTags");
+                });
+
+            modelBuilder.Entity("TPass_Data.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("TPass_Data.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -330,6 +369,46 @@ namespace TPass_Data.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TPass_Data.Entities.CredentialTag", b =>
+                {
+                    b.HasOne("TPass_Data.Entities.Credential", "Credential")
+                        .WithMany("CredentialTags")
+                        .HasForeignKey("CredentialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TPass_Data.Entities.Tag", "Tag")
+                        .WithMany("CredentialTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Credential");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("TPass_Data.Entities.Tag", b =>
+                {
+                    b.HasOne("TPass_Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TPass_Data.Entities.Credential", b =>
+                {
+                    b.Navigation("CredentialTags");
+                });
+
+            modelBuilder.Entity("TPass_Data.Entities.Tag", b =>
+                {
+                    b.Navigation("CredentialTags");
                 });
 
             modelBuilder.Entity("TPass_Data.Entities.User", b =>

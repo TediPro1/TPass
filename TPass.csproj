@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="TPass_Data\TPass_Data.csproj" />
+    <ProjectReference Include="..\TPass_Core\TPass_Core.csproj" />
   </ItemGroup>
 
 </Project>

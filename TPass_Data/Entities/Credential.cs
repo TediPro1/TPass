@@ -5,6 +5,7 @@ namespace TPass_Data.Entities
     public class Credential
     {
         public int Id { get; set; }
+        public ICollection<CredentialTag> CredentialTags { get; set; } = new List<CredentialTag>();
         public string Website { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
@@ -16,5 +17,6 @@ namespace TPass_Data.Entities
         public User User { get; set; } = null!;
     }
 }
+
 
 

@@ -1,0 +1,13 @@
+@model TPass_Core.Models.Tags.TagModel
+@{ ViewData["Title"] = "Create tag"; }
+<h1>Create tag</h1>
+<form asp-action="Create" method="post">
+ <div asp-validation-summary="All" class="text-danger"></div>
+ <input asp-for="Id" type="hidden" />
+ <label asp-for="Name"></label>
+ <input asp-for="Name" class="form-control" />
+ <span asp-validation-for="Name" class="text-danger"></span>
+ <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+<a asp-action="Index">Back to tags</a>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

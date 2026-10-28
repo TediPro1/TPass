@@ -1,0 +1,15 @@
+@model IEnumerable<TPass_Core.Models.Tags.TagModel>
+@{ ViewData["Title"] = "Tags"; }
+<h1>Tags</h1>
+<p><a asp-action="Create">Create tag</a></p>
+<table class="table"><thead><tr><th>Name</th><th>Actions</th></tr></thead><tbody>
+@foreach (var tag in Model)
+{
+ <tr><td>@tag.Name</td><td>
+ <a asp-action="Details" asp-route-id="@tag.Id">Details</a> |
+ <a asp-action="Edit" asp-route-id="@tag.Id">Edit</a> |
+ <a asp-action="Delete" asp-route-id="@tag.Id">Delete</a>
+ </td></tr>
+}
+</tbody></table>
+<p>Open a credential and select Manage tags to assign these tags.</p>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPass", "TPass.csproj", "{2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPass_Data", "TPass_Data\TPass_Data.csproj", "{6FE7BDE1-0556-4C20-ADFE-B7D583D7DB09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPass_Core", "..\TPass_Core\TPass_Core.csproj", "{1D6EA613-21FC-4498-9C12-29D5666C0669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6FE7BDE1-0556-4C20-ADFE-B7D583D7DB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FE7BDE1-0556-4C20-ADFE-B7D583D7DB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE7BDE1-0556-4C20-ADFE-B7D583D7DB09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D6EA613-21FC-4498-9C12-29D5666C0669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D6EA613-21FC-4498-9C12-29D5666C0669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D6EA613-21FC-4498-9C12-29D5666C0669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D6EA613-21FC-4498-9C12-29D5666C0669}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

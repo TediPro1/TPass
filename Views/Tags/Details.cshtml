@@ -1,0 +1,5 @@
+@model TPass_Core.Models.Tags.TagModel
+@{ ViewData["Title"] = "Tag details"; }
+<h1>@Model.Name</h1>
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+<a asp-action="Index">Back to tags</a>

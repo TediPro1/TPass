@@ -1,3 +1,5 @@
+using TPass_Core.Interfaces;
+using TPass_Core.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TPass_Data.Data;
@@ -20,6 +22,8 @@ namespace TPass_Data
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ICredentialsService, CredentialsService>();
+            builder.Services.AddScoped<ITagsService, TagsService>();
 
 
 
@@ -53,5 +57,4 @@ namespace TPass_Data
         }
     }
 }
-
 

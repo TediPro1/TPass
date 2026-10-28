@@ -1,0 +1,18 @@
+@model TPass_Core.Models.Tags.CredentialTagsModel
+@{ ViewData["Title"] = "Manage tags"; }
+<h1>Tags for @Model.Website</h1>
+<form asp-action="Assign" asp-route-id="@Model.CredentialId" method="post">
+ <input asp-for="CredentialId" type="hidden" />
+ <div asp-validation-summary="All" class="text-danger"></div>
+ @foreach (var tag in Model.AvailableTags)
+ {
+  <div class="form-check">
+   <input class="form-check-input" type="checkbox" name="SelectedTagIds" value="@tag.Id"
+    id="tag-@tag.Id" checked="@Model.SelectedTagIds.Contains(tag.Id)" />
+   <label class="form-check-label" for="tag-@tag.Id">@tag.Name</label>
+  </div>
+ }
+ @if (!Model.AvailableTags.Any()) { <p>No tags yet. <a asp-action="Create">Create a tag</a> first.</p> }
+ <button class="btn btn-primary mt-3" type="submit">Save tags</button>
+ <a asp-controller="Credentials" asp-action="Details" asp-route-id="@Model.CredentialId">Cancel</a>
+</form>
