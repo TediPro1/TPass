@@ -1,4 +1,4 @@
-@model TPass_Core.Models.Tags.CredentialTagsModel
+@model TPass.Models.Tags.CredentialTagsModel
 @{ ViewData["Title"] = "Manage tags"; }
 <h1>Tags for @Model.Website</h1>
 <form asp-action="Assign" asp-route-id="@Model.CredentialId" method="post">

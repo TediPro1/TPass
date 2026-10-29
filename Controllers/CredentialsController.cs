@@ -2,7 +2,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TPass_Core.Interfaces;
-using TPass_Core.Models.Credentials;
+using TPass.Models.Credentials;
+using TPass_Data.Entities;
 
 namespace TPass.Controllers;
 
@@ -15,14 +16,27 @@ public class CredentialsController(ICredentialsService credentials) : Controller
     public async Task<IActionResult> Index()
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Challenge();
-        return View(await credentials.GetAllAsync(CurrentUserId));
+        var items = await credentials.GetAllAsync(CurrentUserId);
+        return View(items.Select(c => new CredentialsIndex
+        {
+            Id = c.Id, Website = c.Website, Username = c.Username
+        }));
     }
 
     public async Task<IActionResult> Details(int id)
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Challenge();
-        var model = await credentials.GetDetailsAsync(CurrentUserId, id);
-        return model == null ? NotFound() : View(model);
+        var credential = await credentials.GetByIdAsync(CurrentUserId, id);
+        if (credential is null) return NotFound();
+        return View(new CredentialsDetails
+        {
+            Id = credential.Id,
+            Website = credential.Website,
+            Username = credential.Username,
+            Password = credential.Password,
+            CreatedOn = credential.CreatedOn,
+            Tags = credential.CredentialTags.OrderBy(ct => ct.Tag.Name).Select(ct => ct.Tag.Name).ToList()
+        });
     }
 
     public IActionResult Create() => View(new CredentialsCreate());
@@ -32,15 +46,23 @@ public class CredentialsController(ICredentialsService credentials) : Controller
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Challenge();
         if (!ModelState.IsValid) return View(model);
-        await credentials.CreateAsync(CurrentUserId, model);
+        await credentials.CreateAsync(CurrentUserId, new Credential
+        {
+            Website = model.Website, Username = model.Username, Password = model.Password
+        });
         return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Edit(int id)
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Challenge();
-        var model = await credentials.GetEditAsync(CurrentUserId, id);
-        return model == null ? NotFound() : View(model);
+        var credential = await credentials.GetByIdAsync(CurrentUserId, id);
+        if (credential is null) return NotFound();
+        return View(new CredentialsEdit
+        {
+            Id = credential.Id, Website = credential.Website,
+            Username = credential.Username, Password = credential.Password
+        });
     }
 
     [HttpPost, ValidateAntiForgeryToken]
@@ -53,15 +75,23 @@ public class CredentialsController(ICredentialsService credentials) : Controller
             if (!await credentials.ExistsAsync(CurrentUserId, id)) return NotFound();
             return View(model);
         }
-        if (!await credentials.UpdateAsync(CurrentUserId, model)) return NotFound();
+        if (!await credentials.UpdateAsync(CurrentUserId, new Credential
+        {
+            Id = model.Id, Website = model.Website,
+            Username = model.Username, Password = model.Password
+        })) return NotFound();
         return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Delete(int id)
     {
         if (string.IsNullOrWhiteSpace(CurrentUserId)) return Challenge();
-        var model = await credentials.GetDeleteAsync(CurrentUserId, id);
-        return model == null ? NotFound() : View(model);
+        var credential = await credentials.GetByIdAsync(CurrentUserId, id);
+        if (credential is null) return NotFound();
+        return View(new CredentialsDelete
+        {
+            Id = credential.Id, Website = credential.Website, Username = credential.Username
+        });
     }
 
     [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]

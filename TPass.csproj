@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <Compile Remove="TPass_Data\**" />
+    <Compile Remove="TPass_Core\**" />
     <Content Remove="TPass_Data\**" />
+    <Content Remove="TPass_Core\**" />
     <EmbeddedResource Remove="TPass_Data\**" />
+    <EmbeddedResource Remove="TPass_Core\**" />
     <None Remove="TPass_Data\**" />
+    <None Remove="TPass_Core\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="TPass_Data\TPass_Data.csproj" />
-    <ProjectReference Include="..\TPass_Core\TPass_Core.csproj" />
+    <ProjectReference Include="TPass_Core\TPass_Core.csproj" />
   </ItemGroup>
 
 </Project>
