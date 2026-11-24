@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TPass_Data.Configuration;
 using TPass_Data.Entities;
 
 namespace TPass_Data.Data
@@ -17,15 +18,10 @@ namespace TPass_Data.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Tag>().Property(t => t.Name).HasMaxLength(50).IsRequired();
-            // Avoid multiple SQL Server cascade paths through the join table.
-            builder.Entity<Tag>().HasOne(t => t.User).WithMany()
-                .HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<CredentialTag>().HasKey(ct => new { ct.CredentialId, ct.TagId });
-            builder.Entity<CredentialTag>().HasOne(ct => ct.Credential).WithMany(c => c.CredentialTags)
-                .HasForeignKey(ct => ct.CredentialId);
-            builder.Entity<CredentialTag>().HasOne(ct => ct.Tag).WithMany(t => t.CredentialTags)
-                .HasForeignKey(ct => ct.TagId);
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new TagConfiguration());
+            builder.ApplyConfiguration(new CredentialConfiguration());
+            builder.ApplyConfiguration(new CredentialTagConfiguration());
         }
         public DbSet<Credential> Credentials
         {
@@ -34,5 +30,3 @@ namespace TPass_Data.Data
 
     }
 }
-
-

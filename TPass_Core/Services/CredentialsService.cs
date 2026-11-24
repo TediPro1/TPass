@@ -38,10 +38,11 @@ public class CredentialsService(ApplicationDbContext context) : ICredentialsServ
     {
         var credential = await Owned(userId).FirstOrDefaultAsync(c => c.Id == id);
         if (credential is null) return false;
-        credential.IsDeleted = true;
+        context.Credentials.Remove(credential);
         await context.SaveChangesAsync();
         return true;
     }
 
     public Task<bool> ExistsAsync(string userId, int id) => Owned(userId).AnyAsync(c => c.Id == id);
 }
+

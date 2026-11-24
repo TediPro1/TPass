@@ -194,6 +194,28 @@ namespace TPass_Data.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Credentials");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedOn = new DateTime(2026, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Password = "SamplePassword1!",
+                            UserId = "tpass-demo-user-1",
+                            Username = "demo1",
+                            Website = "https://demo1.example"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedOn = new DateTime(2026, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Password = "SamplePassword2!",
+                            UserId = "tpass-demo-user-2",
+                            Username = "demo2",
+                            Website = "https://demo2.example"
+                        });
                 });
 
             modelBuilder.Entity("TPass_Data.Entities.CredentialTag", b =>
@@ -209,6 +231,18 @@ namespace TPass_Data.Data.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("CredentialTags");
+
+                    b.HasData(
+                        new
+                        {
+                            CredentialId = -1,
+                            TagId = -1
+                        },
+                        new
+                        {
+                            CredentialId = -2,
+                            TagId = -2
+                        });
                 });
 
             modelBuilder.Entity("TPass_Data.Entities.Tag", b =>
@@ -218,6 +252,9 @@ namespace TPass_Data.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -233,6 +270,22 @@ namespace TPass_Data.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            IsDeleted = false,
+                            Name = "Work",
+                            UserId = "tpass-demo-user-1"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            IsDeleted = false,
+                            Name = "Personal",
+                            UserId = "tpass-demo-user-2"
+                        });
                 });
 
             modelBuilder.Entity("TPass_Data.Entities.User", b =>
@@ -307,6 +360,46 @@ namespace TPass_Data.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "tpass-demo-user-1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "tpass-demo-concurrency-1",
+                            CreatedAt = new DateTime(2026, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DisplayName = "Demo User 1",
+                            Email = "demo1@tpass.example",
+                            EmailConfirmed = true,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DEMO1@TPASS.EXAMPLE",
+                            NormalizedUserName = "DEMO1@TPASS.EXAMPLE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAHIEnsGSrP9TsBsJTygruVclvABgP0c0ZznIUGgAk9qA2jMbv42ydGAHbvBbC2T4A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "tpass-demo-security-1",
+                            TwoFactorEnabled = false,
+                            UserName = "demo1@tpass.example"
+                        },
+                        new
+                        {
+                            Id = "tpass-demo-user-2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "tpass-demo-concurrency-2",
+                            CreatedAt = new DateTime(2026, 11, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DisplayName = "Demo User 2",
+                            Email = "demo2@tpass.example",
+                            EmailConfirmed = true,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DEMO2@TPASS.EXAMPLE",
+                            NormalizedUserName = "DEMO2@TPASS.EXAMPLE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAHIEnsGSrP9TsBsJTygruVclvABgP0c0ZznIUGgAk9qA2jMbv42ydGAHbvBbC2T4A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "tpass-demo-security-2",
+                            TwoFactorEnabled = false,
+                            UserName = "demo2@tpass.example"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

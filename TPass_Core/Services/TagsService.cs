@@ -16,6 +16,7 @@ public class TagsService(ApplicationDbContext context) : ITagsService
     public async Task CreateAsync(string userId, Tag tag)
     {
         tag.UserId = userId;
+        tag.IsDeleted = false;
         context.Tags.Add(tag);
         await context.SaveChangesAsync();
     }
@@ -33,7 +34,7 @@ public class TagsService(ApplicationDbContext context) : ITagsService
     {
         var tag = await OwnedTags(userId).FirstOrDefaultAsync(t => t.Id == id);
         if (tag is null) return false;
-        context.Tags.Remove(tag);
+        tag.IsDeleted = true;
         await context.SaveChangesAsync();
         return true;
     }
@@ -66,3 +67,4 @@ public class TagsService(ApplicationDbContext context) : ITagsService
         return true;
     }
 }
+
